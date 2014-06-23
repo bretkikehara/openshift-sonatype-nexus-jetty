@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Openshift-sonatype-nexus-jetty by bretkikehara</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Openshift-sonatype-nexus-jetty</h1>
+        <p>Openshift Sonatype Nexus DIY Cartridge</p>
+
+        <p class="view"><a href="https://github.com/bretkikehara/openshift-sonatype-nexus-jetty">View the Project on GitHub <small>bretkikehara/openshift-sonatype-nexus-jetty</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/bretkikehara/openshift-sonatype-nexus-jetty/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/bretkikehara/openshift-sonatype-nexus-jetty/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/bretkikehara/openshift-sonatype-nexus-jetty">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h2>
+<a name="openshift-sonatype-nexus-diy-cartridge" class="anchor" href="#openshift-sonatype-nexus-diy-cartridge"><span class="octicon octicon-link"></span></a>Openshift Sonatype Nexus DIY Cartridge</h2>
+
+<p>This <a href="https://www.openshift.com/">Openshift</a> cartridge facilitates running a lightweight cartridge by storing only the <a href="http://www.sonatype.org/nexus/">Sonatype Nexus</a> configurations. The build hook will download and configure the Sonatype Nexus Jetty bundle.</p>
+
+<h2>
+<a name="sonatype-nexus" class="anchor" href="#sonatype-nexus"><span class="octicon octicon-link"></span></a>Sonatype Nexus</h2>
+
+<p><a href="http://www.sonatype.org/nexus/">Sonatype Nexus</a> serves as a Maven repository.</p>
+
+<p>Current Deploy Version: <strong><em>2.8.1-01</em></strong> community edition</p>
+
+<p>The deploy version can be changed by setting the version in the <code>.openshift/action_hooks/build</code> script.</p>
+
+<h2>
+<a name="openshift-hook-information" class="anchor" href="#openshift-hook-information"><span class="octicon octicon-link"></span></a>Openshift Hook Information</h2>
+
+<p>All hooks are available under the <code>.openshift/action_hooks</code> directory.</p>
+
+<h3>
+<a name="build" class="anchor" href="#build"><span class="octicon octicon-link"></span></a>Build</h3>
+
+<p>Currently, the build hook downloads the the Nexus bundle and then proceeds to deploy it to <code>$OPENSHIFT_DATA_DIR</code>. This can be changed by updating the <code>NEXUS_VERSION</code> in the <code>.openshift/action_hooks/build</code> script. <strong><em>NOTICE: Any existing version of the nexus deployment will be deleted!</em></strong></p>
+
+<p>If <code>sonatype-work</code> directory does not exists, then a copy is made in the <code>$OPENSHIFT_DATA_DIR</code>. Otherwise, this folder will not be touched across deployments.</p>
+
+<h3>
+<a name="start" class="anchor" href="#start"><span class="octicon octicon-link"></span></a>Start</h3>
+
+<p>The following environment variables are set in the start hook:</p>
+
+<pre><code>NEXUS_APPLICATION_PORT
+NEXUS_APPLICATION_HOST
+NEXUS_CONTEXT_PATH
+NEXUS_WORK
+NEXUS_HOME
+</code></pre>
+
+<p>When running the Sonatype Nexus application, anything that is printed to the System.out is captured in the <code>$OPENSHIFT_DIY_LOG_DIR/out.log</code> file.</p>
+
+<h3>
+<a name="stop" class="anchor" href="#stop"><span class="octicon octicon-link"></span></a>Stop</h3>
+
+<p>Runs the kill command to stop the server.</p>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>This project is available under the MIT License.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/bretkikehara">bretkikehara</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
