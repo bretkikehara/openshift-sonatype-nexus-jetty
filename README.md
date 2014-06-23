@@ -1,16 +1,24 @@
 Openshift Sonatype Nexus DIY Cartridge
 -------------------------
 
-This project facilitates a lightweight cartridge with the [Sonatype Nexus](http://www.sonatype.org/nexus/) configurations only. Since the build hook downloads and configures the Sonatype Nexus Jetty bundle, this code repository only stores the hooks and the custom Nexus configurations.
+This [Openshift](https://www.openshift.com/) cartridge facilitates running a lightweight cartridge by storing only the [Sonatype Nexus](http://www.sonatype.org/nexus/) configurations. The build hook will download and configure the Sonatype Nexus Jetty bundle.
 
-## Hooks
+## Sonatype Nexus
+
+[Sonatype Nexus](http://www.sonatype.org/nexus/) serves as a Maven repository.
+
+Current Deploy Version: ***2.8.1-01*** community edition
+
+The deploy version can be changed by setting the version in the `.openshift/action_hooks/build` script.
+
+## Openshift Hook Information
 
 All hooks are available under the `.openshift/action_hooks` directory.
 
 ### Build
-Currently, the build hook downloads the `2.8.1-01` version of the nexus repository and then proceeds to deployt it to `$OPENSHIFT_DATA_DIR`. This can be changed by updating the `NEXUS_VERSION` in the `.openshift/action_hooks/build` script.
+Currently, the build hook downloads the the Nexus bundle and then proceeds to deploy it to `$OPENSHIFT_DATA_DIR`. This can be changed by updating the `NEXUS_VERSION` in the `.openshift/action_hooks/build` script. ***NOTICE: Any existing version of the nexus deployment will be deleted!***
 
-If `sonatype-work` directory does not exists, then a copy is made in the `$OPENSHIFT_DATA_DIR`.
+If `sonatype-work` directory does not exists, then a copy is made in the `$OPENSHIFT_DATA_DIR`. Otherwise, this folder will not be touched across deployments.
 
 ### Start
 
@@ -27,3 +35,7 @@ When running the Sonatype Nexus application, anything that is printed to the Sys
 ### Stop
 
 Runs the kill command to stop the server.
+
+## License
+
+This project is available under the MIT License.
