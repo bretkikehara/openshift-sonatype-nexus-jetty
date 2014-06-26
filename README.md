@@ -27,19 +27,21 @@ The deploy version can be changed by setting the version in the `.openshift/acti
 All hooks are available under the `.openshift/action_hooks` directory.
 
 ### Build Hook
-Currently, the build hook downloads the the Nexus bundle and then proceeds to deploy it to `$OPENSHIFT_DATA_DIR`. This can be changed by updating the `NEXUS_VERSION` in the `.openshift/action_hooks/build` script. ***NOTICE: Any existing version of the nexus deployment will be deleted!***
+Currently, the build hook downloads the the Nexus bundle and then proceeds to deploy it to `$OPENSHIFT_DATA_DIR`. This can be changed by updating the `NEXUS_VERSION` in the `.openshift/action_hooks/build` script. When the version has been changed, any existing version of the nexus deployment will be deleted. Of course, the `sonatype-work` directory will be left untouched.
 
-If `sonatype-work` directory does not exists, then a copy is made in the `$OPENSHIFT_DATA_DIR`. Otherwise, this folder will not be touched across deployments.
+After the Sonatype Nexus has been deployed, then a copy of `sonatype-work` directory is made in the `$OPENSHIFT_DATA_DIR` if the directory does not exists. Otherwise, this folder will not be touched across deployments.
+
+On every push to Openshift, the project configurations in the `conf` directory will always be copied to the nexus deployment directory.
 
 ### Start Hook
 
 The following environment variables are set in the start hook:
 
 	NEXUS_APPLICATION_PORT
-    NEXUS_APPLICATION_HOST
-    NEXUS_CONTEXT_PATH
-    NEXUS_WORK
-    NEXUS_HOME
+	NEXUS_APPLICATION_HOST
+	NEXUS_CONTEXT_PATH
+	NEXUS_WORK
+	NEXUS_HOME
 
 When running the Sonatype Nexus application, anything that is printed to the System.out is captured in the `$OPENSHIFT_DIY_LOG_DIR/out.log` file.
 
