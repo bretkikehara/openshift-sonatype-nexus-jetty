@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -15,17 +16,18 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1>Openshift-sonatype-nexus-jetty</h1>
-        <p>Openshift Sonatype Nexus DIY Cartridge</p>
-
-        <p class="view"><a href="https://github.com/bretkikehara/openshift-sonatype-nexus-jetty">View the Project on GitHub <small>bretkikehara/openshift-sonatype-nexus-jetty</small></a></p>
-
+        <h1 class="header">Openshift-sonatype-nexus-jetty</h1>
+        <p class="header">Openshift Sonatype Nexus DIY Cartridge</p>
 
         <ul>
-          <li><a href="https://github.com/bretkikehara/openshift-sonatype-nexus-jetty/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/bretkikehara/openshift-sonatype-nexus-jetty/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/bretkikehara/openshift-sonatype-nexus-jetty">View On <strong>GitHub</strong></a></li>
+          <li class="download"><a class="buttons" href="https://github.com/bretkikehara/openshift-sonatype-nexus-jetty/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/bretkikehara/openshift-sonatype-nexus-jetty/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/bretkikehara/openshift-sonatype-nexus-jetty">View On GitHub</a></li>
         </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/bretkikehara">bretkikehara</a></p>
+
+
       </header>
       <section>
         <h2>
@@ -34,6 +36,19 @@
 <p>This <a href="https://www.openshift.com/">Openshift</a> cartridge facilitates running a lightweight cartridge by storing only the <a href="http://www.sonatype.org/nexus/">Sonatype Nexus</a> configurations. The build hook will download and configure the Sonatype Nexus Jetty bundle.</p>
 
 <h2>
+<a name="quickstart-deploy-from-github" class="anchor" href="#quickstart-deploy-from-github"><span class="octicon octicon-link"></span></a>Quickstart: Deploy from GitHub</h2>
+
+<ol>
+<li>Under the Openshift Applications tab, click <code>Create your first application now</code> link or the <code>Add Application</code> button.</li>
+<li>Create a <code>Do-It-Yourself 0.1</code> application.</li>
+<li>
+<p>After selecting your public URL, paste the GitHub <strong>HTTP</strong> repository clone URL. (Just remove the <code>S</code> from the HTTPS repository clone URL)</p>
+
+<p><a href="http://github.com/bretkikehara/openshift-sonatype-nexus-jetty">http://github.com/bretkikehara/openshift-sonatype-nexus-jetty</a></p>
+</li>
+<li><p>Wait a few minutes while the application is built.</p></li>
+<li>Login to the Sonatype Nexus application using the default user <code>admin</code> and password <code>admin123</code>.</li>
+</ol><h2>
 <a name="sonatype-nexus" class="anchor" href="#sonatype-nexus"><span class="octicon octicon-link"></span></a>Sonatype Nexus</h2>
 
 <p><a href="http://www.sonatype.org/nexus/">Sonatype Nexus</a> serves as a Maven repository.</p>
@@ -43,19 +58,21 @@
 <p>The deploy version can be changed by setting the version in the <code>.openshift/action_hooks/build</code> script.</p>
 
 <h2>
-<a name="openshift-hook-information" class="anchor" href="#openshift-hook-information"><span class="octicon octicon-link"></span></a>Openshift Hook Information</h2>
+<a name="openshift" class="anchor" href="#openshift"><span class="octicon octicon-link"></span></a>Openshift</h2>
 
 <p>All hooks are available under the <code>.openshift/action_hooks</code> directory.</p>
 
 <h3>
-<a name="build" class="anchor" href="#build"><span class="octicon octicon-link"></span></a>Build</h3>
+<a name="build-hook" class="anchor" href="#build-hook"><span class="octicon octicon-link"></span></a>Build Hook</h3>
 
-<p>Currently, the build hook downloads the the Nexus bundle and then proceeds to deploy it to <code>$OPENSHIFT_DATA_DIR</code>. This can be changed by updating the <code>NEXUS_VERSION</code> in the <code>.openshift/action_hooks/build</code> script. <strong><em>NOTICE: Any existing version of the nexus deployment will be deleted!</em></strong></p>
+<p>Currently, the build hook downloads the the Nexus bundle and then proceeds to deploy it to <code>$OPENSHIFT_DATA_DIR</code>. This can be changed by updating the <code>NEXUS_VERSION</code> in the <code>.openshift/action_hooks/build</code> script. When the version has been changed, any existing version of the nexus deployment will be deleted. Of course, the <code>sonatype-work</code> directory will be left untouched.</p>
 
-<p>If <code>sonatype-work</code> directory does not exists, then a copy is made in the <code>$OPENSHIFT_DATA_DIR</code>. Otherwise, this folder will not be touched across deployments.</p>
+<p>After the Sonatype Nexus has been deployed, then a copy of <code>sonatype-work</code> directory is made in the <code>$OPENSHIFT_DATA_DIR</code> if the directory does not exists. Otherwise, this folder will not be touched across deployments.</p>
+
+<p>On every push to Openshift, the project configurations in the <code>conf</code> directory will always be copied to the nexus deployment directory.</p>
 
 <h3>
-<a name="start" class="anchor" href="#start"><span class="octicon octicon-link"></span></a>Start</h3>
+<a name="start-hook" class="anchor" href="#start-hook"><span class="octicon octicon-link"></span></a>Start Hook</h3>
 
 <p>The following environment variables are set in the start hook:</p>
 
@@ -69,7 +86,7 @@ NEXUS_HOME
 <p>When running the Sonatype Nexus application, anything that is printed to the System.out is captured in the <code>$OPENSHIFT_DIY_LOG_DIR/out.log</code> file.</p>
 
 <h3>
-<a name="stop" class="anchor" href="#stop"><span class="octicon octicon-link"></span></a>Stop</h3>
+<a name="stop-hook" class="anchor" href="#stop-hook"><span class="octicon octicon-link"></span></a>Stop Hook</h3>
 
 <p>Runs the kill command to stop the server.</p>
 
@@ -79,11 +96,10 @@ NEXUS_HOME
 <p>This project is available under the MIT License.</p>
       </section>
       <footer>
-        <p>This project is maintained by <a href="https://github.com/bretkikehara">bretkikehara</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+        <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
       </footer>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
   </body>
 </html>
