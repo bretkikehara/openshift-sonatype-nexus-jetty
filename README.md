@@ -1,7 +1,7 @@
 Openshift Sonatype Nexus DIY Cartridge
 -------------------------
 
-This [Openshift](https://www.openshift.com/) cartridge facilitates running a lightweight cartridge by storing only the [Sonatype Nexus](http://www.sonatype.org/nexus/) configurations. The build hook will download and configure the Sonatype Nexus Jetty bundle.
+The problem with other Openshift Nexus projects boil down to three main problems: disk usage, little documentation, or war distributions. This [Openshift](https://www.openshift.com/) cartridge facilitates running a lightweight application (less than 100 MB to start) by storing only the [Sonatype Nexus](http://www.sonatype.org/nexus/) configurations and deployment. The build hook will automatically download and configure the Sonatype Nexus Jetty bundle distribution. The start hook script is the only custom code needed to run this application.
 
 ## Quickstart: Deploy from GitHub
 
