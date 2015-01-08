@@ -33,6 +33,14 @@ After the Sonatype Nexus has been deployed, then a copy of `sonatype-work` direc
 
 On every push to Openshift, the project configurations in the `conf` directory will always be copied to the nexus deployment directory.
 
+Because Java Preferences and other classes default to storing files in the user's home directory and that is not writable in OpenShift, I added a new directory
+$OPENSHIFT_DATA_DIR/userhome
+
+Then export a Java specific environment variable:
+export _JAVA_OPTIONS=-Duser.home=$OPENSHIFT_DATA_DIR/userhome
+
+This has the small side effect of emitting a log line every time a Java app starts("Picked up _JAVA_OPTIONS: -Duser.home=xxx"), but I find it more than makes up for that!
+
 ### Start Hook
 
 The following environment variables are set in the start hook:
