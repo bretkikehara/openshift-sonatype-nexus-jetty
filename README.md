@@ -9,7 +9,7 @@ The problem with other Openshift Nexus projects boil down to three main problems
 2. Create a `Do-It-Yourself 0.1` application.
 3. After selecting your public URL, paste the GitHub **HTTP** repository clone URL. (Just remove the `S` from the HTTPS repository clone URL)
 
-	http://github.com/bretkikehara/openshift-sonatype-nexus-jetty
+	http://github.com/rscorer/openshift-sonatype-nexus-jetty
 
 4. Wait a few minutes while the application is built.
 5. Login to the Sonatype Nexus application using the default user `admin` and password `admin123`.
@@ -52,8 +52,9 @@ The following environment variables are set in the start hook:
 	NEXUS_CONTEXT_PATH
 	NEXUS_WORK
 	NEXUS_HOME
+	_JAVA_OPTIONS
 
-When running the Sonatype Nexus application, anything that is printed to the System.out is captured in the `$OPENSHIFT_DIY_LOG_DIR/out.log` file.
+When running the Sonatype Nexus application, anything that is printed to the System.out is captured in the `$OPENSHIFT_DIY_LOG_DIR/out.log` file. I also remove the nexus logs directory and replace it with a link to the `$OPENSHIFT_DIY_LOG_DIR` directory
 
 ### Stop Hook
 
