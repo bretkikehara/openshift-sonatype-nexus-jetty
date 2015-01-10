@@ -9,7 +9,7 @@ The problem with other Openshift Nexus projects boil down to three main problems
 2. Create a `Do-It-Yourself 0.1` application.
 3. After selecting your public URL, paste the GitHub **HTTP** repository clone URL. (Just remove the `S` from the HTTPS repository clone URL)
 
-	http://github.com/rscorer/openshift-sonatype-nexus-jetty
+	http://github.com/bretkikehara/openshift-sonatype-nexus-jetty
 
 4. Wait a few minutes while the application is built.
 5. Login to the Sonatype Nexus application using the default user `admin` and password `admin123`.

@@ -13,6 +13,12 @@ export NEXUS_CONTEXT_PATH=/
 export NEXUS_WORK=$OPENSHIFT_DATA_DIR/sonatype-work
 export NEXUS_HOME=$OPENSHIFT_DATA_DIR/$NEXUS_NAME
 
-# Stop the nexus app.
-cd $NEXUS_HOME
-bin/nexus stop
+if [ -d "$NEXUS_HOME/bin" ]; then
+  # Stop the nexus app.
+  cd $NEXUS_HOME
+  bin/nexus stop
+else
+  # Brutal, kill all java apps - remember to exit 0 in case there weren't any running
+  killall -q java
+  exit 0
+fi
