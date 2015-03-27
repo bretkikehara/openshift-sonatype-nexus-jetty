@@ -18,7 +18,7 @@ The problem with other Openshift Nexus projects boil down to three main problems
 
 [Sonatype Nexus](http://www.sonatype.org/nexus/) serves as a Maven repository.
 
-Current Deploy Version: ***2.11.1-01*** community edition
+Current Deploy Version: ***2.11.2-06*** community edition
 
 The deploy version can be changed by setting the version in the `.openshift/action_hooks/build` script.
 
