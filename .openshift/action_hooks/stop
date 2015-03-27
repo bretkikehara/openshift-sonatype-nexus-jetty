@@ -1,10 +1,24 @@
 #!/bin/bash
 
 # The logic to stop your application should be put in this script.
-if [ -z "$(ps -ef | grep java | grep -v grep)" ]
-then
-    echo "Application is not running"
+export NEXUS_NAME=`ls $OPENSHIFT_DATA_DIR | grep nexus-*`
+
+#
+# Environment variables
+#
+# https://support.sonatype.com/entries/30145206-Q-Can-I-override-Nexus-configuration-properties-with-environment-variables-
+export NEXUS_APPLICATION_PORT=$OPENSHIFT_DIY_PORT
+export NEXUS_APPLICATION_HOST=$OPENSHIFT_DIY_IP
+export NEXUS_CONTEXT_PATH=/
+export NEXUS_WORK=$OPENSHIFT_DATA_DIR/sonatype-work
+export NEXUS_HOME=$OPENSHIFT_DATA_DIR/$NEXUS_NAME
+
+if [ -d "$NEXUS_HOME/bin" ]; then
+  # Stop the nexus app.
+  cd $NEXUS_HOME
+  bin/nexus stop
 else
-	echo "Application will be stopped"
-    kill `ps -ef | grep java | grep -v grep | awk '{ print $2 }'` > /dev/null 2>&1
+  # Brutal, kill all java apps - remember to exit 0 in case there weren't any running
+  killall -q java
+  exit 0
 fi

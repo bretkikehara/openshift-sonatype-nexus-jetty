@@ -18,7 +18,7 @@ The problem with other Openshift Nexus projects boil down to three main problems
 
 [Sonatype Nexus](http://www.sonatype.org/nexus/) serves as a Maven repository.
 
-Current Deploy Version: ***2.8.1-01*** community edition
+Current Deploy Version: ***2.11.2-06*** community edition
 
 The deploy version can be changed by setting the version in the `.openshift/action_hooks/build` script.
 
@@ -33,6 +33,16 @@ After the Sonatype Nexus has been deployed, then a copy of `sonatype-work` direc
 
 On every push to Openshift, the project configurations in the `conf` directory will always be copied to the nexus deployment directory.
 
+Because Java Preferences and other classes default to storing files in the user's home directory and that is not writable in OpenShift, I added a new directory
+
+	$OPENSHIFT_DATA_DIR/userhome
+
+Then export a Java specific environment variable:
+
+	export _JAVA_OPTIONS=-Duser.home=$OPENSHIFT_DATA_DIR/userhome
+
+This has the small side effect of emitting a log line every time a Java app starts `"Picked up _JAVA_OPTIONS: -Duser.home=xxx"`.
+
 ### Start Hook
 
 The following environment variables are set in the start hook:
@@ -42,8 +52,9 @@ The following environment variables are set in the start hook:
 	NEXUS_CONTEXT_PATH
 	NEXUS_WORK
 	NEXUS_HOME
+	_JAVA_OPTIONS
 
-When running the Sonatype Nexus application, anything that is printed to the System.out is captured in the `$OPENSHIFT_DIY_LOG_DIR/out.log` file.
+When running the Sonatype Nexus application, anything that is printed to the System.out is captured in the `$OPENSHIFT_DIY_LOG_DIR/out.log` file. I also remove the nexus logs directory and replace it with a link to the `$OPENSHIFT_DIY_LOG_DIR` directory
 
 ### Stop Hook
 
